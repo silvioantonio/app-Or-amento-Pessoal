@@ -59,8 +59,23 @@ function cadastrarDespesas(){
     
     if(despesas.isDadosValidos()){
         bd.gravar(despesas)
-        $('#sucessoNaGravacao').modal('show')
-    }else
-        $('#erroDeGravacao').modal('show')
+        $('#tituloDoModal').html('Registro Inserido com Sucesso')
+        $('.modal-header').removeClass('text-danger')
+        $('.modal-header').addClass('text-success')
+        $('.modal-body').html('Despesa foi cadastrada no LocalStorage do navegador!')
+        $('.modal-footer button').removeClass('btn-danger')
+        $('.modal-footer button').addClass('btn btn-success')
+        $('.modal-footer button').html('Voltar')
+        $('#modalRegistraDespesas').modal('show')
+    }else{
+        $('#tituloDoModal').html('Falha ao inserir Registro')
+        $('.modal-header').removeClass('text-success')
+        $('.modal-header').addClass('text-danger')
+        $('.modal-body').html('Despesa nao foi cadastrada, todos os dados devem ser preenchidos!')
+        $('.modal-footer button').removeClass('btn-success')
+        $('.modal-footer button').addClass('btn btn-danger')
+        $('.modal-footer button').html('Voltar e Corrigir')
+        $('#modalRegistraDespesas').modal('show')
+    }
 
 }
