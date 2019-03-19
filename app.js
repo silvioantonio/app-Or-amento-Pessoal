@@ -7,6 +7,14 @@ class Despesas{
         this.valor = valor
         this.tipo = tipo
     }
+
+    isDadosValidos(){
+        for(let i in this){
+            if(this[i] == undefined || this[i] == '' || this[i] == null)
+                return false
+        }
+        return true
+    }
 }
 
 class Bd{
@@ -22,7 +30,7 @@ class Bd{
         let proximoId = localStorage.getItem('id')
         return parseInt(proximoId) + 1
     }
-    
+
     gravar(despesas){
         let id = this.getProximoId()
         localStorage.setItem(id,JSON.stringify(despesas))
@@ -49,6 +57,7 @@ function cadastrarDespesas(){
         valor.value
     )
     
-    bd.gravar(despesas)
+    if(despesas.isDadosValidos())
+        bd.gravar(despesas)
 
 }
