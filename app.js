@@ -57,7 +57,10 @@ function cadastrarDespesas(){
         valor.value
     )
     
-    if(despesas.isDadosValidos())
+    if(despesas.isDadosValidos()){
         bd.gravar(despesas)
+        $('#sucessoNaGravacao').modal('show')
+    }else
+        $('#erroDeGravacao').modal('show')
 
 }
