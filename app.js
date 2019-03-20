@@ -52,7 +52,24 @@ class Bd{
     }
 
     pesquisar(despesa){
+        let despesasFiltradas = Array()
+        despesasFiltradas = this.recuperarTodosRegistros()
 
+        //retorna truou false se o valos pesquisado existe na tabela 
+        if(despesa.ano != '')
+            despesasFiltradas = despesasFiltradas.filter(f => f.ano == despesa.ano)
+        if(despesa.mes != '')
+            despesasFiltradas = despesasFiltradas.filter(f => f.mes == despesa.mes)
+        if(despesa.dia != '')
+            despesasFiltradas = despesasFiltradas.filter(f => f.dia == despesa.dia)
+        if(despesa.tipo != '')
+            despesasFiltradas = despesasFiltradas.filter(f => f.tipo == despesa.tipo)
+        if(despesa.descricao != '')
+            despesasFiltradas = despesasFiltradas.filter(f => f.descricao == despesa.descricao)
+        if(despesa.valor != '')
+            despesasFiltradas = despesasFiltradas.filter(f => f.valor == despesa.valor)
+        
+        return despesasFiltradas
     }
 
 }
@@ -107,11 +124,12 @@ function cadastrarDespesas(){
 
 }
 
-function carregaListaDespesas(){
+function carregaListaDespesas(metodo){
     //cria um novo array passando os objetos como parametro pro array
     let d = Array()
-    d = bd.recuperarTodosRegistros()
+    d = metodo
     let listaDespesas = document.getElementById('listaDeDespesas')
+    listaDespesas.innerHTML = ''
 
     d.forEach(function(despesa){
         //cria uma linha para cada elemento do array
@@ -149,6 +167,7 @@ function pesquisarDespesa(){
 
     let despesa = new Despesas(ano, mes, dia, tipo, descricao, valor)
 
-    bd.pesquisar(despesa)
+    //Chamada de funçao passando como paramentro o resultado de outra funçao
+    carregaListaDespesas(bd.pesquisar(despesa))
 
 }
