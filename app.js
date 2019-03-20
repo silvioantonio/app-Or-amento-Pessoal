@@ -45,8 +45,10 @@ class Bd{
         for(let i = 1; i <= id; i++){
             //converte o parse passando pra variavel que é um objeto literal
             let despesa = JSON.parse(localStorage.getItem(i))
-            if(despesa != null)    
+            if(despesa != null) {   
+                despesa.id = i
                 despesas.push(despesa)//adiciona cada item dentro do array
+            }
         }
         return despesas
     }
@@ -70,6 +72,10 @@ class Bd{
             despesasFiltradas = despesasFiltradas.filter(f => f.valor == despesa.valor)
         
         return despesasFiltradas
+    }
+
+    remover(id){
+        localStorage.removeItem(id)
     }
 
 }
@@ -154,6 +160,16 @@ function carregaListaDespesas(metodo){
         linha.insertCell(1).innerHTML = despesa.tipo
         linha.insertCell(2).innerHTML = despesa.descricao
         linha.insertCell(3).innerHTML = despesa.valor
+
+        let btn = document.createElement('button')
+        btn.className = 'btn btn-danger'
+        btn.innerHTML = '<i class = "fas fa-times"/>'
+        btn.id = `id_despesa_${despesa.id}`
+        btn.onclick = function(){
+            bd.remover(despesa.id)
+            carregaListaDespesas(bd.recuperarTodosRegistros())
+        }
+        linha.insertCell(4).append(btn)
     })
 }
 
